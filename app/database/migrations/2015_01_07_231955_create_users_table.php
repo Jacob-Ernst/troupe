@@ -21,6 +21,10 @@ class CreateUsersTable extends Migration {
 		    $table->string('last_name', 255);
 		    $table->string('first_name_meta', 255)->index();
 		    $table->string('last_name_meta', 255)->index();
+		    $table->enum('type', array('director', 'actor', 'writer', 'artist'));
+		    $table->text('bio');
+		    $table->string('resume', 255);
+		    $table->string('avi', 255);
 		    $table->boolean('admin')->default(0);
 		    $table->softDeletes();
 		    $table->rememberToken();
