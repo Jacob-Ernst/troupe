@@ -1,0 +1,1 @@
+/vagrant/sites/troupe.dev/app/views/updates/create.blade.php

@@ -1,0 +1,1 @@
+/vagrant/sites/troupe.dev/app/views/videos/show.blade.php
