@@ -25,9 +25,56 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 	
-	public function posts()
+	public function setPasswordAttribute($value)
     {
-        return $this->belongsToMany('Post');
+        $this->attributes['password'] = Hash::make($value);
     }
-
+    
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+    
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = $value;
+        $this->attributes['first_name_meta'] = metaphone($value);
+    }
+    
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = $value;
+        $this->attributes['last_name_meta'] = metaphone($value);
+    }
+	
+    public function images()
+    {
+        return $this->morphMany('Image', 'imageable');
+    }
+    
+    public function performances()
+    {
+        return $this->belongsToMany('Performance');
+    }
+    
+    public function events()
+    {
+        return $this->belongsToMany('Event');
+    }
+    
+    public function announcements()
+    {
+        return $this->hasMany('Announcement');
+    }
+    
+    public function roles()
+    {
+        return $this->hasMany('Role');
+    }
+    
+    public function media()
+    {
+        return $this->belongsToMany('Medium');
+    }
+    
 }

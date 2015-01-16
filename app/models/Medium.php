@@ -10,7 +10,7 @@ class Medium extends BaseModel {
         $this->attributes['medium'] = strtolower($value);
     }
     
-    public function posts()
+    public function users()
     {
         return $this->belongsToMany('User');
     }
