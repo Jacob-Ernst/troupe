@@ -15,6 +15,7 @@ class CreateUpdatesTable extends Migration {
 		Schema::create('updates', function(Blueprint $table)
 		{
 			$table->increments('id');
+		    $table->string('title', 255);
 		    $table->text('info');
 			$table->integer('updateable_id')->unsigned();
 			$table->string('updateable_type');

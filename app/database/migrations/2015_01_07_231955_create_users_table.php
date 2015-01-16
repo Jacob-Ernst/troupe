@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration {
 		    $table->text('bio');
 		    $table->string('resume', 255);
 		    $table->string('avi', 255);
-		    $table->boolean('admin')->default(0);
+		    $table->enum('role', array('admin', 'organizer', 'user'));
 		    $table->softDeletes();
 		    $table->rememberToken();
 			$table->timestamps();

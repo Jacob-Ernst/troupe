@@ -17,6 +17,7 @@ class CreateEventsTable extends Migration {
 			$table->increments('id');
 			$table->text('summary');
 		    $table->text('location');
+		    $table->date('date');
 		    $table->softDeletes();
 			$table->timestamps();
 		});

@@ -15,7 +15,7 @@ class CreateVideosTable extends Migration {
 		Schema::create('videos', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->text('embed_link');
+			$table->text('embed_path');
 			$table->integer('videoable_id')->unsigned();
 			$table->string('videoable_type');
 		    $table->softDeletes();

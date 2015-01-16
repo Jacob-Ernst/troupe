@@ -17,6 +17,10 @@ class CreatePerformancesTable extends Migration {
 			$table->increments('id');
 			$table->text('summary');
 		    $table->text('location');
+		    $table->string('script', 255)->nullable();
+		    $table->date('date');
+		    $table->integer('performance_type_id')->unsigned()->index();
+			$table->foreign('performance_type_id')->references('id')->on('performance_types')->onDelete('cascade');
 		    $table->softDeletes();
 			$table->timestamps();
 		});

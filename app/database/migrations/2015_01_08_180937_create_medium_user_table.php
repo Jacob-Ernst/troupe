@@ -14,11 +14,11 @@ class CreateMediumUserTable extends Migration {
 	{
 		Schema::create('medium_user', function(Blueprint $table)
 		{
-			$table->increments('id');
 			$table->integer('medium_id')->unsigned()->index();
 			$table->foreign('medium_id')->references('id')->on('media')->onDelete('cascade');
 			$table->integer('user_id')->unsigned()->index();
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+		    $table->softDeletes();
 			$table->primary(['medium_id', 'user_id']);
 			$table->timestamps();
 		});

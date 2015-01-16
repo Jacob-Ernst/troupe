@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateAnnouncementsTable extends Migration {
+class CreateRolesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,10 @@ class CreateAnnouncementsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('announcements', function(Blueprint $table)
+		Schema::create('roles', function(Blueprint $table)
 		{
 			$table->increments('id');
-		    $table->string('title', 255);
-		    $table->text('info');
-		    $table->integer('user_id')->unsigned()->index();
-			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+			$table->string('role', 255);
 		    $table->softDeletes();
 			$table->timestamps();
 		});
@@ -32,7 +29,7 @@ class CreateAnnouncementsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('announcements');
+		Schema::drop('roles');
 	}
 
 }
