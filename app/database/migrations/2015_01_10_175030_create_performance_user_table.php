@@ -18,10 +18,8 @@ class CreatePerformanceUserTable extends Migration {
 			$table->foreign('performance_id')->references('id')->on('performances')->onDelete('cascade');
 			$table->integer('user_id')->unsigned()->index();
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-			$table->integer('role_id')->unsigned()->index();
-			$table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
 		    $table->softDeletes();
-			$table->primary(['performance_id', 'user_id', 'role_id']);
+			$table->primary(['performance_id', 'user_id']);
 			$table->timestamps();
 		});
 	}
