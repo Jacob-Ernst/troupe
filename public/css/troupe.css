@@ -1,0 +1,15 @@
+body{
+    background-image: url('/img/swirl_pattern.png');
+    font-size: 16px;
+}
+.small {
+    font-size: 75%;
+}
+
+.azure{
+    background-color: azure;
+}
+
+.magenta{
+    background-color: rgba(255, 0, 144, 0.81);
+}
