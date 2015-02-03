@@ -24,14 +24,14 @@ class UsersController extends BaseController {
         
         if (count(Input::all())) {
         	$type = strtolower(Input::get('type'));
-        	$query->where('type', '=', "$search");
+        	$query->where('type', '=', "$type");
             $query->orWhereHas('media', function($mediaSearch){
                 $media = [];
                                 
                 foreach (explode(',', Input::get('media')) as $value) {
                 	$media[] = $value;
             	}
-                $mediaSearch->whereIn('media', $media);
+                $mediaSearch->whereIn('medium', $media);
             });
             $meta = [];
             foreach (explode(' ', Input::get('name')) as $value) {
