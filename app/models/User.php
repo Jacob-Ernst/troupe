@@ -44,6 +44,21 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
         $this->attributes['email'] = strtolower($value);
     }
     
+    public function setGenderAttribute($value)
+    {
+        $this->attributes['gender'] = strtolower($value);
+    }
+    
+    public function setRoleAttribute($value)
+    {
+        $this->attributes['role'] = strtolower($value);
+    }
+    
+    public function setTypeAttribute($value)
+    {
+        $this->attributes['type'] = strtolower($value);
+    }
+    
     public function setFirstNameAttribute($value)
     {
         $this->attributes['first_name'] = $value;
