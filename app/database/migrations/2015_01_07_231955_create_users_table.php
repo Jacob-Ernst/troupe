@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration {
 		    $table->string('last_name', 255);
 		    $table->string('first_name_meta', 255)->index();
 		    $table->string('last_name_meta', 255)->index();
+		    $table->enum('gender', array('m', 'f', 'o', 'p'));
+		    $table->date('date_of_birth');
 		    $table->enum('type', array('director', 'actor', 'writer', 'artist'))->nullable();
 		    $table->text('bio')->nullable();
 		    $table->string('resume', 255)->nullable();
