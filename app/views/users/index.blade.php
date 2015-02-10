@@ -1,26 +1,23 @@
 @extends('layouts.master')
 
-@section('header', "<title>Troupe</title>")
+@section('header', "<title>Find Users</title>")
 
 @section('content')
 
     <div class="jumbotron magenta">
-        <h1>Welcome!</h1>
-        <div class="carousel">
+        <h1 class='text-center'>Find Users</h1>
             @foreach ($users as $user)
                 <div class='text-center azure'><p>{{{$user->first_name}}}</p></div>
             @endforeach
-        </div>
         <div class='row'>
+            <div class="text-center">{{ $users->links() }}</div>
             <div class='col-md-8 col-md-offset-2'>
                 <div class='text-center'>
-                    <button type="button" class="btn btn-default btn-lg search-btn" data-dismiss="modal">&times;</button>
+                    <button  data-toggle="modal" data-target="#modal-search" type="button" class="btn btn-default btn-lg search-btn" data-dismiss="modal">Filter</button>
                 </div>
             </div>    
         </div>
-    </div>
-    <a data-toggle="modal" type="button" data-target="#modal-search" class="btn btn-lg">Post</a>
-    
+    </div>    
     
     <!-- --------------------- Modal for search --------------------- -->
 
@@ -28,23 +25,46 @@
                 <div id="modal-search" class="modal fade lg" tabindex="-1" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            {{ Form::open(array('url' => 'troupe.dev/users', 'method' => 'get')) }}                        
+                            {{ Form::open(array('url' => '/users', 'method' => 'get')) }}                        
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h3>Find Users</h3>
                             </div>
                             <div class="modal-body">
-                                <div class="input-group form-group">
-                                    {{ Form::label('email', 'Email:', array('class' => 'input-group-addon')) }}
-                                    {{ Form::text('email', Input::old('email') , array('class' => 'form-control')) }}
-                                </div>                        
-                                <div class="input-group form-group">
-                                    {{ Form::label('password', 'Password:', array('class' => 'input-group-addon')) }}
-                                    {{ Form::password('password', array('class' => 'form-control')) }}
+                                <div class='row'>
+                                    <div class="input-group form-group col-md-10 col-md-offset-1">
+                                        {{ Form::label('name', 'Name:', array('class' => 'input-group-addon')) }}
+                                        {{ Form::text('name', Input::old('name') , array('class' => 'form-control')) }}
+                                    </div>  
+                                                          
+                                    <div class="input-group form-group col-md-2 col-md-offset-5">
+                                        <h3>gender</h3>
+                                        <label class="checkbox">
+                                            {{ Form::checkbox('male', 'm') }} male
+                                        </label>
+                                        <label class="checkbox">
+                                            {{ Form::checkbox('female', 'f') }} female
+                                        </label>
+                                        <label class="checkbox">
+                                            {{ Form::checkbox('other', 'o') }} other
+                                        </label>
+                                        <label class="checkbox">
+                                            {{ Form::checkbox('not_given', 'p') }} not given
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="input-group form-group col-md-2 col-md-offset-5">
+                                        <h3>type</h3>
+                                        {{ Form::select('type', array('none' => 'none', 'director' => 'director', 'actor' => 'actor', 'writer' => 'writer', 'artist' => 'artist')) }}
+                                    </div>
+                                    
+                                    <div class="input-group form-group col-md-8 col-md-offset-3">
+                                        <input name="media" id="tags"/>
+                                    </div>
                                 </div>
                             </div> 
                             <div class="modal-footer">
-                                {{Form::submit('Login', array('class' => 'btn btn-default'))}}
+                                {{Form::submit('Filter', array('class' => 'btn btn-default'))}}
                             </div>
                             {{ Form::close() }}
                         </div><!-- /.modal-content -->
