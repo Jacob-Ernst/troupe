@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 class UsersController extends BaseController {
 	
 	
@@ -21,24 +23,76 @@ class UsersController extends BaseController {
 	public function index()
 	{
 		$query = User::with('media');
+		
         
-        if (count(Input::all())) {
-        	$type = strtolower(Input::get('type'));
-        	$query->where('type', '=', "$type");
-            $query->orWhereHas('media', function($mediaSearch){
-                $media = [];
-                                
-                foreach (explode(',', Input::get('media')) as $value) {
-                	$media[] = $value;
+        if (!empty(Input::all())) {
+        	if((Input::get('type') != 'none') && !empty(Input::get('type'))){
+	        	$type = strtolower(Input::get('type'));
+	        	$query->where('type', '=', "$type");
+        	}
+        	
+        	if(!empty(Input::get('media'))){
+	            $query->WhereHas('media', function($mediaSearch){
+	                $media = [];
+	                                
+	                foreach (explode(',', Input::get('media')) as $value) {
+	                	$media[] = $value;
+	            	}
+	                $mediaSearch->whereIn('medium', $media);
+	            });
+	        }
+	        
+	        if (
+	        	(Input::get('male')      == 'm') || 
+	        	(Input::get('female')    == 'f') || 
+	        	(Input::get('other')     == 'o') || 
+	        	(Input::get('not_given') == 'p')
+	           ) 
+	        {
+	        	
+	        	$male      = Input::get('male')      == 'm' ? 'm' : '';
+	        	$female    = Input::get('female')    == 'f' ? 'f' : '';
+	        	$other     = Input::get('other')     == 'o' ? 'o' : '';
+	        	$not_given = Input::get('not_given') == 'p' ? 'p' : '';
+	        	
+	        	$gender_inputs = [$male, $female, $other, $not_given];
+	        	
+	        	$genders = [];
+	        	                    
+                foreach ($gender_inputs as $value) {
+                	if(!empty($value)){
+                		$genders[] = $value;
+                	}
             	}
-                $mediaSearch->whereIn('medium', $media);
-            });
-            $meta = [];
-            foreach (explode(' ', Input::get('name')) as $value) {
-                $meta[] = metaphone($value);
-            }
-            $query->orWhereIn('first_name_meta', $meta);
-            $query->orWhereIn('last_name_meta', $meta);
+	                $query->whereIn('gender', $genders);
+        	}
+        	
+        	if(
+        		(Input::get('type') == 'none' || empty(Input::get('type'))) &&
+        		 Input::get('male')      != 'm' &&
+				 Input::get('female')    != 'f' &&
+				 Input::get('other')     != 'o' &&
+				 Input::get('not_given') != 'p' &&
+				 empty(Input::get('media'))     &&
+				 Input::has('name')
+				 
+        	  )
+        	{
+        		$meta = [];
+	            foreach (explode(' ', Input::get('name')) as $value) {
+	                $meta[] = metaphone($value);
+	            }
+	            $query->WhereIn('first_name_meta', $meta);
+	            $query->orWhereIn('last_name_meta', $meta);
+        	}
+        	else{
+	            $meta = [];
+	            foreach (explode(' ', Input::get('name')) as $value) {
+	                $meta[] = metaphone($value);
+	            }
+	            $query->orWhereIn('first_name_meta', $meta);
+	            $query->orWhereIn('last_name_meta', $meta);
+        	}
         }
             
         $users = $query->orderBy('last_name', 'ASC')->paginate(6);
@@ -66,17 +120,21 @@ class UsersController extends BaseController {
 	 */
 	public function store()
 	{
-		$user->email = Input::get('email');
-        $user->password = Input::get('password');
-        $user->first_name = Input::get('first_name');
-        $user->last_name = Input::get('last_name');
+		$validator = Validator::make($data = Input::all(), User::$rules);
+
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
         
         
-        $user->save();
-            
-        $id = $user->id;
+        $user = new User();
         
-        return Redirect::action('UsersController@show', array($id));
+        $response = $this->saveUser($user);
+        
+        Auth::login($user);
+        
+        return $response;
 	}
 
 	/**
@@ -134,5 +192,35 @@ class UsersController extends BaseController {
 	{
 		//
 	}
+	
+	public function saveUser(&$user)
+    {
+        
+        $user->email = Input::get('email');
+        $user->password = Input::get('first_password');
+        $user->first_name = Input::get('first_name');
+        $user->last_name = Input::get('last_name');
+        $user->gender = Input::get('gender');
+        $user->type = Input::get('type');
+        $user->role = 'user';
+        
+        //concatonate the three dropdowns 
+        
+        $user->date_of_birth = Carbon::create(Input::get('b_year'), Input::get('b_month'), Input::get('b_date'));
+        
+        $user->date_of_birth->format('Y-m-d');
+        
+        
+        $user->save();
+        
+        if (Input::has('media')) {
+            $user->media = Input::get('media');
+        }
+            
+        $id = $user->id;
+        
+        return Redirect::action('UsersController@show', array($id));
+        
+    }
 
 }
