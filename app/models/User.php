@@ -15,9 +15,14 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
     
     public static $rules = array(
         'email'            => 'required|max:200|email|unique:users', 
-        'password'         => 'required|max:255|min:6',
+        'first_password'   => 'required|max:255|min:6',
+        'last_password'    => 'required|max:255|min:6|same:first_password',
         'first_name'       => 'required|max:255',
-        'last_name'        => 'required|max:255'
+        'last_name'        => 'required|max:255',
+        'gender'           => 'required|in:m,f,o,p',
+        'b_year'           => 'required|numeric',
+        'b_month'          => 'required|numeric',
+        'b_date'           => 'required|numeric'
     );
 
 	/**
@@ -34,7 +39,37 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 	
-	public function setPasswordAttribute($value)
+    public function images()
+    {
+        return $this->morphMany('Image', 'imageable');
+    }
+    
+    public function performances()
+    {
+        return $this->belongsToMany('Performance');
+    }
+    
+    public function events()
+    {
+        return $this->belongsToMany('Event');
+    }
+    
+    public function announcements()
+    {
+        return $this->hasMany('Announcement');
+    }
+    
+    public function roles()
+    {
+        return $this->hasMany('Role');
+    }
+    
+    public function media()
+    {
+        return $this->belongsToMany('Medium');
+    }
+    
+    public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
     }
@@ -70,35 +105,18 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
         $this->attributes['last_name'] = $value;
         $this->attributes['last_name_meta'] = metaphone($value);
     }
-	
-    public function images()
-    {
-        return $this->morphMany('Image', 'imageable');
-    }
     
-    public function performances()
+    public function setMediaAttribute($value)
     {
-        return $this->belongsToMany('Performance');
+        $media = explode(',', $value);
+        
+        $mediumIds = [];
+        
+        foreach($media as $medium)
+        { 
+            $insert = Medium::firstOrCreate([ 'medium' => $medium]); 
+            $mediumIds[] = $insert->id; 
+        }
+        $this->media()->sync($mediumIds);
     }
-    
-    public function events()
-    {
-        return $this->belongsToMany('Event');
-    }
-    
-    public function announcements()
-    {
-        return $this->hasMany('Announcement');
-    }
-    
-    public function roles()
-    {
-        return $this->hasMany('Role');
-    }
-    
-    public function media()
-    {
-        return $this->belongsToMany('Medium');
-    }
-    
 }
