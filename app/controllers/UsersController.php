@@ -222,5 +222,21 @@ class UsersController extends BaseController {
         return Redirect::action('UsersController@show', array($id));
         
     }
+    
+    public function uploadAvi ()
+    {
+        $user = Auth::user();
+        $id = $user->id;
+        if (Input::hasFile('image')) {
+            $file = Input::file('image');
+            $orig_name = str_random(6) . $file->getClientOriginalName();
+            $dest_path = public_path() . "/img/avi/$id/";
+            $upload = $file->move($dest_path, $orig_name);
+            $user->avi = "/img/avi/$id/" . $orig_name;
+            $user->save();
+
+            return Redirect::action('UsersController@show', array($id));
+        }
+    }
 
 }
