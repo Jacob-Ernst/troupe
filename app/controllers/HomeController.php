@@ -49,4 +49,16 @@ class HomeController extends BaseController {
 		Auth::logout();
 		return Redirect::action('HomeController@showHome');
 	}
+	
+	public function showAdmin()
+	{	
+		if (Auth::user()->role == 'organizer' || Auth::user()->role == 'admin') 
+		{
+			return View::make('admin');
+		}
+		else 
+		{
+			return Redirect::action('HomeController@showHome');
+		}
+	}
 }
