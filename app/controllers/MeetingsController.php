@@ -1,6 +1,6 @@
 <?php
 
-class EventsController extends \BaseController {
+class MeetingsController extends BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -44,7 +44,24 @@ class EventsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$users = DB::select(
+			'SELECT U.first_name, U.last_name, U.id, R.role
+			FROM users AS U
+			JOIN meeting_user as P 
+				ON U.id = P.user_id
+			JOIN roles as R
+			  	ON P.role_id = R.id
+			WHERE P.meeting_id = ?',
+ 	    [$id]);
+        
+        $meeting = Meeting::find($id);
+        
+        if (!$meeting) {
+            Log::info('User encountered 404 error', Input::all());
+            App::abort(404);
+        }
+        
+        return View::make('meetings.show', compact('users', 'meeting'));
 	}
 
 	/**

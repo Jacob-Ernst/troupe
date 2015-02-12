@@ -1,8 +1,8 @@
 <?php
 
-class Event extends BaseModel {
-    use SoftDeletingTrait;
-	protected $fillable = [];
+class Meeting extends BaseModel {
+	use SoftDeletingTrait;
+    protected $fillable = [];
     
     public function images()
     {

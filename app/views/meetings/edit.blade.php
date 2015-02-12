@@ -1,0 +1,1 @@
+/vagrant/sites/troupe.dev/app/views/Meetings/edit.blade.php
