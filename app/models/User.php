@@ -14,15 +14,16 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
     protected $dates = ['deleted_at'];
     
     public static $rules = array(
-        'email'            => 'required|max:200|email|unique:users', 
-        'first_password'   => 'required|max:255|min:6',
-        'last_password'    => 'required|max:255|min:6|same:first_password',
-        'first_name'       => 'required|max:255',
-        'last_name'        => 'required|max:255',
-        'gender'           => 'required|in:m,f,o,p',
-        'b_year'           => 'required|numeric',
-        'b_month'          => 'required|numeric',
-        'b_date'           => 'required|numeric'
+        'email'          => 'required|max:200|email|unique:users', 
+        'first_password' => 'required|max:255|min:6',
+        'last_password'  => 'required|max:255|min:6|same:first_password',
+        'first_name'     => 'required|max:255',
+        'last_name'      => 'required|max:255',
+        'gender'         => 'required|in:m,f,o,p',
+        'type'           => 'required|in:director,actor,writer,artist',
+        'b_year'         => 'required|numeric',
+        'b_month'        => 'required|numeric',
+        'b_date'         => 'required|numeric'
     );
 
 	/**
