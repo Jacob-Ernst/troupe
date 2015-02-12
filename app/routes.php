@@ -11,7 +11,16 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('/', 'HomeController@showHome');
+
+Route::get('/admin', 'HomeController@showAdmin');
+
+Route::post('/login', 'HomeController@doLogin');
+
+Route::get('/logout', 'HomeController@doLogout');
+
+Route::resource('users', 'UsersController');
+
+Route::resource('performances', 'PerformancesController');
+
+Route::resource('meetings', 'MeetingsController');

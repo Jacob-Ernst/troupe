@@ -1,0 +1,1 @@
+/vagrant/sites/troupe.dev/app/views/announcements/index.blade.php
