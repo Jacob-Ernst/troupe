@@ -10,13 +10,15 @@
 {{ $errors->first('b_year', '<span class="help-block">:message</span>')}}
 {{ $errors->first('b_month', '<span class="help-block">:message</span>')}}
 {{ $errors->first('b_date', '<span class="help-block">:message</span>')}}
+{{ $errors->first('type', '<span class="help-block">:message</span>')}}
+
 
     <div class="jumbotron magenta row">
-        <div class='text-center col-md-10 col-md-offset-1'>
+        <div class='text-center col-xs-10 col-xs-offset-1'>
             <h1>Welcome!</h1>
         </div>
         
-        <div class='col-md-10 col-md-offset-1'>
+        <div class='col-xs-10 col-xs-offset-1'>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -24,7 +26,7 @@
             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
-        <div class='col-md-8 col-md-offset-2'>
+        <div class='col-xs-8 col-xs-offset-2'>
             <div class='text-center'>
                 <button  data-toggle="modal" data-target="#modal-sign_up" type="button" class="btn btn-default btn-lg search-btn" data-dismiss="modal">Sign Up</button>
             </div>
@@ -48,11 +50,11 @@
                                 <div class='text-center'>
                                     <h3>Name</h3>
                                 </div>
-                                <div class="input-group form-group col-md-10 col-md-offset-1">
+                                <div class="input-group form-group col-xs-10 col-xs-offset-1">
                                     {{ Form::label('first_name', 'First:', array('class' => 'input-group-addon')) }}
                                     {{ Form::text('first_name', Input::old('first_name') , array('class' => 'form-control')) }}
                                 </div>  
-                                <div class="input-group form-group col-md-10 col-md-offset-1">
+                                <div class="input-group form-group col-xs-10 col-xs-offset-1">
                                     {{ Form::label('last_name', 'Last:', array('class' => 'input-group-addon')) }}
                                     {{ Form::text('last_name', Input::old('last_name') , array('class' => 'form-control')) }}
                                 </div>
@@ -60,7 +62,7 @@
                                 <div class='text-center'>
                                     <h3>Email</h3>
                                 </div>
-                                <div class="input-group form-group col-md-10 col-md-offset-1">
+                                <div class="input-group form-group col-xs-10 col-xs-offset-1">
                                     {{ Form::label('email', 'Email:', array('class' => 'input-group-addon')) }}
                                     {{ Form::text('email', Input::old('email') , array('class' => 'form-control')) }}
                                 </div>
@@ -68,16 +70,16 @@
                                 <div class='text-center'>
                                     <h3>Password</h3>
                                 </div>
-                                <div class="input-group form-group col-md-10 col-md-offset-1">
+                                <div class="input-group form-group col-xs-10 col-xs-offset-1">
                                     {{ Form::label('first_password', 'Password', array('class' => 'input-group-addon')) }}
                                     {{ Form::password('first_password', array('class' => 'form-control', 'value' => "Input::old('last_password')")) }}
                                 </div>  
-                                <div class="input-group form-group col-md-10 col-md-offset-1">
+                                <div class="input-group form-group col-xs-10 col-xs-offset-1">
                                     {{ Form::label('last_password', 'Retype Password', array('class' => 'input-group-addon')) }}
                                     {{ Form::password('last_password', array('class' => 'form-control', 'value' => "Input::old('last_password')")) }}
                                 </div>
                                                       
-                                <div class="input-group form-group col-md-4 col-md-offset-4">
+                                <div class="input-group form-group col-xs-4 col-xs-offset-4">
                                     <div class='text-center'>
                                         <h3>gender</h3>
                                     </div>
@@ -129,12 +131,12 @@
                                     </div>
                                 </div>
                                 
-                                <div class="input-group form-group col-md-4 col-md-offset-4 text-center">
+                                <div class="input-group form-group col-xs-4 col-xs-offset-4 text-center">
                                     <h3>type</h3>
-                                    {{ Form::select('type', array('director' => 'director', 'actor' => 'actor', 'writer' => 'writer', 'artist' => 'artist'), null, ['class' => 'form-control', 'required']) }}
+                                    {{ Form::select('type', array('type', 'director' => 'director', 'actor' => 'actor', 'writer' => 'writer', 'artist' => 'artist'), null, ['class' => 'form-control', 'required']) }}
                                 </div>
                                 
-                                <div class="input-group form-group col-md-8 col-md-offset-3">
+                                <div class="input-group form-group col-xs-8 col-xs-offset-3">
                                     <h3>Media you work with <small>optional</small></h3>
                                     <input name="media" id="tags"/>
                                 </div>
