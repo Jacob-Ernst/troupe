@@ -4,9 +4,9 @@ class Performance extends BaseModel {
     use SoftDeletingTrait;
 	protected $fillable = [];
     
-    public function images()
+    public function photos()
     {
-        return $this->morphMany('Image', 'imageable');
+        return $this->morphMany('Photo', 'photoable');
     }
     
     public function videos()
