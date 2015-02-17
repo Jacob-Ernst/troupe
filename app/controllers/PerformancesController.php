@@ -44,7 +44,24 @@ class PerformancesController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$users = DB::select(
+			'SELECT U.first_name, U.last_name, U.id, R.role
+			FROM users AS U
+			JOIN performance_user as P 
+				ON U.id = P.user_id
+			JOIN roles as R
+			  	ON P.role_id = R.id
+			WHERE P.performance_id = ?',
+ 	    [$id]);
+        
+        $performance = Performance::with('videos')->find($id);
+        
+        if (!$performance) {
+            Log::info('User encountered 404 error', Input::all());
+            App::abort(404);
+        }
+        
+        return View::make('performances.show', compact('users', 'performance'));
 	}
 
 	/**
