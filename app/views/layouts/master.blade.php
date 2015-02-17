@@ -12,7 +12,7 @@
         <link rel="stylesheet" type="text/css" href="/css/troupe.css" />
         <link rel="stylesheet" type="text/css" href="/slick-1.3.15/slick/slick.css"/>
         <link rel="stylesheet" type="text/css" href="/css/jquery.tagsinput.css" />
-
+        <link  href="/dist/cropper.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -21,60 +21,58 @@
         <![endif]-->
     </head>
     <body>
-        <div id='wrap'>
-            <!-- standard heading -->
-            <nav class="navbar navbar-default" role="navigation">
-                <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand orange" href="#">Home</a>
-                </div>
+        <!-- standard heading -->
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand orange" href="#">Home</a>
+            </div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  @if (Auth::check())
-                  <ul class="nav navbar-nav">
-                    <li><a data-toggle="modal" type="button" data-target="#modal-newpost" id="about" class="btn btn-lg">Post</a></li>
-                  </ul>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              @if (Auth::check())
+              <ul class="nav navbar-nav">
+                <li><a data-toggle="modal" type="button" data-target="#modal-newpost" id="about" class="btn btn-lg">Post</a></li>
+              </ul>
+              @endif
+              <form class="navbar-form navbar-left" role="search" method='GET' action="#">
+                  <input type="text" id='search' name='search'class="form-control" placeholder="Search">
+                
+              </form>
+              <ul class="nav navbar-nav navbar-right">
+                
+                  @if(Auth::check())
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{{Auth::user()->first_name}}} {{{Auth::user()->last_name}}}<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{{ action('UsersController@show', array(Auth::user()->id)) }}}">Profile</a></li>
+                            @if(Auth::user()->role == 'organizer' || Auth::user()->role == 'admin')
+                                <li><a href="{{{ action('HomeController@showAdmin') }}}">Admin</a></li>
+                            @endif
+                            <li class="divider"></li>
+                            <li><a href="{{{ action('HomeController@doLogout') }}}">Logout</a></li>
+                        </ul>
+                    </li>    
+                  @else
+                    <li><a data-toggle="modal" type="button" data-target="#modal-login" id="about" class="btn btn-lg">Login</a></li>
                   @endif
-                  <form class="navbar-form navbar-left" role="search" method='GET' action="#">
-                      <input type="text" id='search' name='search'class="form-control" placeholder="Search">
-                    
-                  </form>
-                  <ul class="nav navbar-nav navbar-right">
-                    
-                      @if(Auth::check())
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{{Auth::user()->first_name}}} {{{Auth::user()->last_name}}}<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{{ action('UsersController@show', array(Auth::user()->id)) }}}">Profile</a></li>
-                                @if(Auth::user()->role == 'organizer' || Auth::user()->role == 'admin')
-                                    <li><a href="{{{ action('HomeController@showAdmin') }}}">Admin</a></li>
-                                @endif
-                                <li class="divider"></li>
-                                <li><a href="{{{ action('HomeController@doLogout') }}}">Logout</a></li>
-                            </ul>
-                        </li>    
-                      @else
-                        <li><a data-toggle="modal" type="button" data-target="#modal-login" id="about" class="btn btn-lg">Login</a></li>
-                      @endif
-                  </ul>
-                </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
-            </nav>
-            
-            
-            <div class= 'container'>
-                <div class='row'>
-                    <div class='col-md-8 col-md-offset-2'>
-                        @yield('content')
-                    </div>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        
+        
+        <div class= 'container'>
+            <div class='row'>
+                <div class='col-xs-10 col-xs-offset-1'>
+                    @yield('content')
                 </div>
             </div>
         </div>
@@ -108,17 +106,13 @@
                 </div><!-- /.modal -->
             </div>
         <!-- --------------------- Modal end --------------------- -->
-        <div id="footer">
-          <div class="container text-center">
-            <p class="muted credit">footer here yo</p>
-          </div>
-        </div>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>        <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/slick-1.3.15/slick/slick.min.js"></script>
         <script src="/js/jquery.tagsinput.min.js"></script>
+        <script src="/dist/cropper.js"></script>
         <script type="text/javascript">
             $('.carousel').slick({
                 dots: true
