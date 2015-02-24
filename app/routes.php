@@ -19,6 +19,8 @@ Route::post('/login', 'HomeController@doLogin');
 
 Route::get('/logout', 'HomeController@doLogout');
 
+Route::post('/avi', 'UsersController@uploadAvi');
+
 Route::resource('users', 'UsersController');
 
 Route::resource('performances', 'PerformancesController');
