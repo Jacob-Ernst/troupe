@@ -146,8 +146,7 @@ class UsersController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$user = User::find($id);
-        
+		$user = User::with('media')->find($id);
         
         if (!$user) {
             Log::info('User encountered 404 error', Input::all());
@@ -229,14 +228,21 @@ class UsersController extends BaseController {
         $id = $user->id;
         if (Input::hasFile('image')) {
             $file = Input::file('image');
-            $orig_name = str_random(6) . $file->getClientOriginalName();
             $dest_path = public_path() . "/img/avi/$id/";
-            $upload = $file->move($dest_path, $orig_name);
+            $orig_name = str_random(6) . $file->getClientOriginalName();
+            $dest_path .= $orig_name;
+            $img = Image::make($file->getRealPath());
+            $img->crop(intval(Input::get('width')), intval(Input::get('height')), intval(Input::get('x')), intval(Input::get('y')));
+            $img->resize(300, 300);
+            $img->save($dest_path);
+            
             $user->avi = "/img/avi/$id/" . $orig_name;
+            
             $user->save();
 
             return Redirect::action('UsersController@show', array($id));
         }
+        return Redirect::action('HomeController@showHome');
     }
 
 }
