@@ -1,9 +1,73 @@
+@font-face {
+    font-family: LeagueGothic;
+    src: url("/fonts/LeagueGothic-Regular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: OstrichSansBold;
+    src: url("/fonts/ostrichsans-bold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: OstrichSansBlack;
+    src: url("/fonts/ostrichsans-black.otf") format("opentype");
+}
+
+@font-face {
+    font-family: FanwoodTextItalic;
+    src: url("/fonts/fanwood-text-italic.otf") format("opentype");
+}
+
 body{
     background-image: url('/img/swirl_pattern.png');
     font-size: 16px;
+    
+    padding-top: 70px;
 }
 .small {
     font-size: 75%;
+}
+
+h1{
+    font-family: OstrichSansBold;
+    color: #FE7070;
+    font-size: 400%;
+    padding-bottom: 40px;
+}
+
+h2{
+    font-family: OstrichSansBold;
+    color: #FE7070;
+    font-size: 250%;
+    padding-bottom: 15px;
+}
+
+div.page-header>h1{
+    font-family: OstrichSansBold;
+    font-size: 400% !important;
+    background-color: rgba(195, 171, 158, 0.82);
+    padding: 10px 30px;
+    border-radius: 5px;
+}
+
+
+@media screen and (max-width: 600px) {
+    div.page-header>h1{
+        font-family: OstrichSansBlack;
+        font-size: 250% !important;
+        padding: 5px 30px;
+    }
+}
+
+
+p{ 
+    font-size: 24px;
+    font-family: FanwoodTextItalic;
+    padding-bottom: 40px;
+}
+
+a{
+    font-size: 18px !important;
 }
 
 .azure{
@@ -26,9 +90,19 @@ body{
 }
 
 .page-header{
-    border-bottom: 1px solid magenta;
+    border-bottom: 1px solid grey;
 }
 
-body { 
-    padding-top: 70px; 
+.home-section{
+    padding-bottom: 70px;
+}
+
+.filter-btn{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 7px 75px 7px;
+}
+
+.file-input{
+    padding: 30px;
 }
