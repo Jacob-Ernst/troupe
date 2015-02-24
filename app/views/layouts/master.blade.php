@@ -13,6 +13,8 @@
         <link rel="stylesheet" type="text/css" href="/slick-1.3.15/slick/slick.css"/>
         <link rel="stylesheet" type="text/css" href="/css/jquery.tagsinput.css" />
         <link  href="/dist/cropper.css" rel="stylesheet">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link href="/bootstrap-switch-master/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -32,16 +34,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand orange" href="#">Home</a>
+              <a class="navbar-brand orange" href="{{{ action('HomeController@showHome') }}}">Home</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              @if (Auth::check())
-              <ul class="nav navbar-nav">
-                <li><a data-toggle="modal" type="button" data-target="#modal-newpost" id="about" class="btn btn-lg">Post</a></li>
-              </ul>
-              @endif
+              
               <form class="navbar-form navbar-left" role="search" method='GET' action="#">
                   <input type="text" id='search' name='search'class="form-control" placeholder="Search">
                 
@@ -75,6 +73,7 @@
                     @yield('content')
                 </div>
             </div>
+            @yield('content-no-offset')
         </div>
         <!-- --------------------- Modal for login --------------------- -->
 
@@ -113,6 +112,7 @@
         <script type="text/javascript" src="/slick-1.3.15/slick/slick.min.js"></script>
         <script src="/js/jquery.tagsinput.min.js"></script>
         <script src="/dist/cropper.js"></script>
+        <script src="/bootstrap-switch-master/dist/js/bootstrap-switch.js"></script>
         <script type="text/javascript">
             $('.carousel').slick({
                 dots: true
