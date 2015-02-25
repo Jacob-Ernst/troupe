@@ -1,5 +1,8 @@
 <?php
 
+use Carbon\Carbon;
+
+
 class PerformancesController extends \BaseController {
 
 	/**
@@ -12,6 +15,43 @@ class PerformancesController extends \BaseController {
 	{
 		//
 	}
+	
+	public function savePerformance(&$performance)
+	{
+		$performance->title = Input::get('title');
+        $performance->summary = Input::get('summary');
+        $performance->location = Input::get('location');
+        
+        $performance->type = Input::get('type');
+        
+        
+        //concatonate the three dropdowns 
+        
+        $performance->date = Carbon::create(Input::get('d_year'), Input::get('d_month'), Input::get('d_day'));
+        
+        $performance->date->format('Y-m-d');
+        
+        
+        $performance->save();
+        
+        
+            
+        $id = $performance->id;
+        
+        $file = Input::file('script');
+        
+        $dest_path = public_path() . "/scripts/performances/$id/";
+		$orig_name = "troupe_" . str_random(6) . $file->getClientOriginalName();
+		
+		$file->move($dest_path, $orig_name);
+		
+        $performance->script = $dest_path . $orig_name;
+        $performance->save();
+        
+        return Redirect::action('PerformancesController@show', array($id));
+	}
+	
+	
 
 	/**
 	 * Show the form for creating a new resource.
@@ -32,7 +72,19 @@ class PerformancesController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$validator = Validator::make($data = Input::all(), Performance::$rules);
+
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
+        
+        
+        $performance = new Performance();
+        
+        $response = $this->savePerformance($performance);
+        
+        return $response;
 	}
 
 	/**
@@ -99,5 +151,8 @@ class PerformancesController extends \BaseController {
 	{
 		//
 	}
+	
+	
+	
 
 }
