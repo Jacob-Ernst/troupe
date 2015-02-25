@@ -30,28 +30,28 @@
 
             <div class="container">
                 <div id="modal-performance" class="modal fade lg" tabindex="-1" role="dialog">
-                    <div class="modal-dialog">
+                    <div id='performace-modal-dialog' class="modal-dialog">
                         <div class="modal-content">
-                            {{ Form::open(array('action' => 'HomeController@doLogin', 'class' => 'post')) }}                        
+                            {{ Form::open(array('action' => 'PerformancesController@store', 'class' => 'post', 'files' => 'true')) }}                        
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h3>Performance</h3>
                             </div>
                             <div class="modal-body">
                                 <div class='row'>
-                                    <div class="input-group form-group col-md-10 col-md-offset-1">
+                                    <div class="input-group form-group col-xs-10 col-xs-offset-1">
                                         {{ Form::label('title', 'Title:', array('class' => 'input-group-addon')) }}
                                         {{ Form::text('title', Input::old('title') , array('class' => 'form-control')) }}
                                     </div>
-                                    <div class="input-group form-group col-md-10 col-md-offset-1">
+                                    <div class="input-group form-group col-xs-10 col-xs-offset-1">
                                         {{ Form::label('type', 'Type:', array('class' => 'input-group-addon')) }}
                                         {{ Form::text('type', Input::old('type') , array('class' => 'form-control')) }}
                                     </div>
-                                    <div class="input-group form-group col-md-10 col-md-offset-1">
+                                    <div class="input-group form-group col-xs-10 col-xs-offset-1">
                                         {{ Form::label('summary', 'Summary:', array('class' => '')) }}
                                         {{ Form::textarea('summary', null, ['class' => 'form-control']) }}
                                     </div>
-                                    <div class="input-group form-group col-md-10 col-md-offset-1">
+                                    <div class="input-group form-group col-xs-10 col-xs-offset-1">
                                         {{ Form::label('location', 'Location:', array('class' => '')) }}
                                         {{ Form::textarea('location', null, ['class' => 'form-control']) }}
                                     </div>
@@ -109,9 +109,15 @@
                                         </div>
                                         
                                     </div>
+                                    <div class='col-xs-8 col-xs-offset-2' id='script-name-container'>
+                                        <h3 id='performace-script-name'></h3>
+                                    </div>
                                     <div class='form-group'>
                                         <div class='col-xs-4 col-xs-offset-4'>
-                                            <input type='file' id="script" name='script' class='file-input'/>
+                                                <span class="btn btn-primary btn-file file-input btn-block">
+                                                    Browse <input type="file" id="script" name='script'/>
+                                                </span>
+                                            {{-- <input type='file' id="script" name='script' class='file-input'/> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -189,4 +195,38 @@
             </div>
         <!-- --------------------- Modal end --------------------- -->
 
+@stop
+
+@section('bottom-scripts')
+    <script type="text/javascript">
+    
+        $(document).on('change', '.btn-file :file', function() {
+            var input = $(this),
+            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [numFiles, label]);
+        });
+        
+        
+        $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+            console.log(numFiles);
+            console.log(label);
+            
+            if(!$('#performace-script-name').html())
+            {
+                $(this).parent().toggleClass('btn-primary');
+                $(this).parent().toggleClass('btn-success');
+                
+            }
+            $('#performace-script-name').html(label);
+            ad_height  = $('#script-name-container').height();
+            $backdrop  = $('.modal-backdrop');
+            el_height  = $('#performace-modal-dialog').innerHeight();
+            $backdrop.css({
+                height: el_height + ad_height + 30,
+            });
+        });
+    
+    
+    </script>
 @stop
