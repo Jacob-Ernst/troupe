@@ -139,7 +139,7 @@
                 <div id="modal-event" class="modal fade lg" tabindex="-1" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            {{ Form::open(array('action' => 'HomeController@doLogin', 'class' => 'post')) }}                        
+                            {{ Form::open(array('action' => 'MeetingsController@store', 'class' => 'post')) }}                       
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h3>Event</h3>
@@ -219,7 +219,7 @@
                             </div> 
                             <br>
                             <div class="modal-footer">
-                                {{Form::submit('Login', array('class' => 'btn btn-default'))}}
+                                {{Form::submit('Create', array('class' => 'btn btn-default'))}}
                             </div>
                             {{ Form::close() }}
                         </div><!-- /.modal-content -->
