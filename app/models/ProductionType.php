@@ -12,4 +12,9 @@ class ProductionType extends BaseModel {
     {
         return $this->hasMany('Performance');
     }
+    
+    public function meetings()
+    {
+        return $this->hasMany('Meeting');
+    }
 }
