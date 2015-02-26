@@ -1,5 +1,8 @@
 <?php
 
+use Carbon\Carbon;
+
+
 class MeetingsController extends BaseController {
 
 	/**
@@ -32,7 +35,19 @@ class MeetingsController extends BaseController {
 	 */
 	public function store()
 	{
-		//
+		$validator = Validator::make($data = Input::all(), Meeting::$rules);
+
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
+        
+        
+        $meeting = new Meeting();
+        
+        $response = $this->saveMeeting($meeting);
+        
+        return $response;
 	}
 
 	/**
@@ -98,6 +113,29 @@ class MeetingsController extends BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+	
+	public function saveMeeting(&$meeting)
+	{
+		$meeting->title = Input::get('title');
+        $meeting->summary = Input::get('summary');
+        $meeting->location = Input::get('location');
+        
+        $meeting->type = Input::get('type');
+        
+        
+        //concatonate the three dropdowns 
+        
+        $meeting->date = Carbon::create(Input::get('d_year'), Input::get('d_month'), Input::get('d_day'));
+        
+        $meeting->date->format('Y-m-d');
+        
+        
+        $meeting->save();
+        
+        $id = $meeting->id;
+        
+        return Redirect::action('MeetingsController@show', array($id));
 	}
 
 }
