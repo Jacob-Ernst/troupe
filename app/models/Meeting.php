@@ -1,8 +1,20 @@
 <?php
 
+use Carbon\Carbon;
+
 class Meeting extends BaseModel {
 	use SoftDeletingTrait;
-    protected $fillable = [];
+    protected $fillable = ['production_type_id'];
+    
+    public static $rules = array(
+        'title'     => 'required|max:255', 
+        'type'      => 'required|max:255',
+        'summary'   => 'required',
+        'location'  => 'required',
+        'd_year'    => 'required|numeric',
+        'd_month'   => 'required|numeric',
+        'd_day'     => 'required|numeric'
+    );
     
     public function images()
     {
@@ -27,5 +39,21 @@ class Meeting extends BaseModel {
     public function roles()
     {
         return $this->belongsToMany('Role');
+    }
+    
+    public function production_types()
+    {
+        return $this->belongsTo('ProductionType');
+    }
+    
+    public function setTypeAttribute($value)
+    {
+        $type = strtolower($value);
+        
+        $insert = ProductionType::firstOrCreate([ 'type' => $type]); 
+        
+        $id = $insert->id;
+        
+        $this->production_type_id = $id;
     }
 }
