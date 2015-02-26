@@ -23,7 +23,9 @@ class HomeController extends BaseController {
 	public function showHome()
 	{
 		if(Auth::check()){
-			return View::make('home');
+			$performances = Performance::orderBy('date', 'ASC')->paginate(6);
+		
+			return View::make('home')->with('performances', $performances);
 		}
 		else{
 			return View::make('landing');
