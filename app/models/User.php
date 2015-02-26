@@ -4,6 +4,7 @@ use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use Carbon\Carbon;
 
 class User extends BaseModel implements UserInterface, RemindableInterface {
 
@@ -119,5 +120,27 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
             $mediumIds[] = $insert->id; 
         }
         $this->media()->sync($mediumIds);
+    }
+    
+    public function getDateOfBirthAttribute($value)
+    {  
+        $utc = Carbon::createFromFormat('Y-m-d', $value);
+        return $utc->setTimezone('America/Chicago');
+    }
+    
+    public function getGenderAttribute($value)
+    {  
+        if ($value == 'm') {
+            return 'male';
+        }
+        elseif ($value == 'f') {
+            return 'female';
+        }
+        elseif ($value == 'o') {
+            return 'other';
+        }
+        elseif ($value == 'p') {
+            return 'not given';
+        }
     }
 }

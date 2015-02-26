@@ -4,20 +4,28 @@
 
 @section('content')
 
-    <div class="jumbotron magenta">
+    
+        <div class='row'>
         <h1 class='text-center'>Find Users</h1>
             @foreach ($users as $user)
-                <div class='text-center azure'><p>{{{$user->first_name}}}</p></div>
+                <div class="col-xs-6 col-lg-4 container text-center">
+                    <a href="/users/{{{ $user->id}}}">
+                        @if ($user->avi)
+                            <img src="{{ $user->avi }}" alt="{{{ $user->first_name }}} {{{ $user->last_name }}}" class="img-responsive img-circle">
+                        @else
+                            <img src="http://lorempixel.com/295/295/people/{{ mt_rand(1, 10) }}" alt="{{{ $user->first_name }}} {{{ $user->last_name }}}" class="img-responsive img-circle">
+                        @endif
+                        <h2>{{ $user->first_name }} {{ $user->last_name }}</h2>
+                    </a>
+                </div>
             @endforeach
-        <div class='row'>
-            <div class="text-center">{{ $users->links() }}</div>
             <div class='col-md-8 col-md-offset-2'>
+                <div class="text-center">{{ $users->links() }}</div>
                 <div class='text-center'>
-                    <button  data-toggle="modal" data-target="#modal-search" type="button" class="btn btn-default btn-lg search-btn" data-dismiss="modal">Filter</button>
+                    <button  data-toggle="modal" data-target="#modal-search" type="button" class="btn btn-default btn-lg search-btn filter-btn" data-dismiss="modal">Filter</button>
                 </div>
             </div>    
         </div>
-    </div>    
     
     <!-- --------------------- Modal for search --------------------- -->
 

@@ -1,7 +1,7 @@
 <?php
 
 class ProductionType extends BaseModel {
-	protected $fillable = [];
+	protected $fillable = ['type'];
     
     public function setTypeAttribute($value)
     {
