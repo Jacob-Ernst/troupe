@@ -24,8 +24,10 @@ class HomeController extends BaseController {
 	{
 		if(Auth::check()){
 			$performances = Performance::orderBy('date', 'ASC')->paginate(6);
-		
-			return View::make('home')->with('performances', $performances);
+			
+			$meetings = Meeting::orderBy('date', 'ASC')->paginate(6);
+			
+			return View::make('home', compact('performances', 'meetings'));
 		}
 		else{
 			return View::make('landing');
