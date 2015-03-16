@@ -26,3 +26,5 @@ Route::resource('users', 'UsersController');
 Route::resource('performances', 'PerformancesController');
 
 Route::resource('meetings', 'MeetingsController');
+
+Route::resource('announcements', 'AnnouncementsController');
