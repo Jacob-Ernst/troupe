@@ -32,7 +32,19 @@ class AnnouncementsController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$validator = Validator::make($data = Input::all(), Meeting::$rules);
+
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
+        
+        
+        $announcement = new Announcement();
+        
+        $response = $this->saveAnnouncement($announcement);
+        
+        return $response;
 	}
 
 	/**
@@ -81,6 +93,29 @@ class AnnouncementsController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+	
+	public function saveAnnouncement(&$announcement)
+	{
+		$announcement->title = Input::get('title');
+        $announcement->info = Input::get('info');
+        // $announcement->location = Input::get('location');
+        
+        $announcement->type = Input::get('type');
+        
+        
+        //concatonate the three dropdowns 
+        
+        // $announcement->date = Carbon::create(Input::get('d_year'), Input::get('d_month'), Input::get('d_day'));
+        
+        // $announcement->date->format('Y-m-d');
+        
+        
+        $announcement->save();
+        
+        $id = $announcement->id;
+        
+        return Redirect::action('AnnouncementsController@show', array($id));
 	}
 
 }
