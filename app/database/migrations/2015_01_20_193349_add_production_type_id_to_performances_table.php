@@ -29,7 +29,8 @@ class AddProductionTypeIdToPerformancesTable extends Migration {
 	{
 		Schema::table('performances', function(Blueprint $table)
 		{
-			
+			$table->dropForeign('performances_production_type_id_foreign');
+			$table->dropColumn('production_type_id');
 		});
 	}
 

@@ -29,7 +29,8 @@ class AddProductionTypeIdToMeetingsTable extends Migration {
 	{
 		Schema::table('meetings', function(Blueprint $table)
 		{
-			
+			$table->dropForeign('meetings_production_type_id_foreign');
+			$table->dropColumn('production_type_id');
 		});
 	}
 

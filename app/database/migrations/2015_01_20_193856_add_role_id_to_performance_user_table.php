@@ -29,7 +29,8 @@ class AddRoleIdToPerformanceUserTable extends Migration {
 	{
 		Schema::table('performance_user', function(Blueprint $table)
 		{
-			
+			$table->dropForeign('performance_user_role_id_foreign');
+			$table->dropColumn('role_id');
 		});
 	}
 
