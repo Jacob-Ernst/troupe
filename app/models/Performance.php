@@ -60,4 +60,10 @@ class Performance extends BaseModel {
         
         $this->production_type_id = $id;
     }
+    
+    public function getDateAttribute($value)
+    {  
+        $utc = Carbon::createFromFormat('Y-m-d', $value);
+        return $utc->setTimezone('America/Chicago');
+    }
 }
