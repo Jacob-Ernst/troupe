@@ -104,7 +104,7 @@ class AnnouncementsController extends \BaseController {
         $announcement->type = Input::get('type');
         
         
-        //concatonate the three dropdowns 
+        //potential date input 
         
         // $announcement->date = Carbon::create(Input::get('d_year'), Input::get('d_month'), Input::get('d_day'));
         
