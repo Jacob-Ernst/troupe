@@ -14,11 +14,11 @@ class CreateAnnouncementMediumTable extends Migration {
 	{
 		Schema::create('announcement_medium', function(Blueprint $table)
 		{
-			$table->increments('id');
 			$table->integer('announcement_id')->unsigned()->index();
 			$table->foreign('announcement_id')->references('id')->on('announcements')->onDelete('cascade');
 			$table->integer('medium_id')->unsigned()->index();
 			$table->foreign('medium_id')->references('id')->on('media')->onDelete('cascade');
+			$table->primary(['announcement_id', 'medium_id']);
 			$table->timestamps();
 		});
 	}

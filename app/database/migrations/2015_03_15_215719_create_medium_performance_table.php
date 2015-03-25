@@ -14,11 +14,11 @@ class CreateMediumPerformanceTable extends Migration {
 	{
 		Schema::create('medium_performance', function(Blueprint $table)
 		{
-			$table->increments('id');
 			$table->integer('medium_id')->unsigned()->index();
 			$table->foreign('medium_id')->references('id')->on('media')->onDelete('cascade');
 			$table->integer('performance_id')->unsigned()->index();
 			$table->foreign('performance_id')->references('id')->on('performances')->onDelete('cascade');
+			$table->primary(['performance_id', 'medium_id']);
 			$table->timestamps();
 		});
 	}
