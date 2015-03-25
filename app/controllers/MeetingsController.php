@@ -24,7 +24,8 @@ class MeetingsController extends BaseController {
 	 */
 	public function create()
 	{
-		//
+        Input::flash();
+		return View::make('meetings.create');
 	}
 
 	/**
@@ -45,7 +46,7 @@ class MeetingsController extends BaseController {
         
         $meeting = new Meeting();
         
-        $response = $this->saveMeeting($meeting);
+        $response = $this->createMeeting($meeting);
         
         return $response;
 	}
@@ -88,7 +89,14 @@ class MeetingsController extends BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$meeting = Meeting::find($id);
+        
+        if(!$meeting)
+        {
+            App::abort(404);
+        }
+        
+        return View::make('meetings.edit')->with('meeting', $meeting);
 	}
 
 	/**
