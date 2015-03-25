@@ -28,3 +28,5 @@ Route::resource('performances', 'PerformancesController');
 Route::resource('meetings', 'MeetingsController');
 
 Route::resource('announcements', 'AnnouncementsController');
+
+Route::post('meetings/create', 'MeetingsController@create');
