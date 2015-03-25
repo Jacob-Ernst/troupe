@@ -15,7 +15,7 @@
         </div>
         <div class='col-xs-8 col-xs-offset-2'>
             <div class='text-center'>
-                <button  data-toggle="modal" data-target="#modal-event" type="button" class="btn btn-default btn-lg search-btn" data-dismiss="modal">Create Event</button>
+                <button  data-toggle="modal" data-target="#modal-meeting" type="button" class="btn btn-default btn-lg search-btn" data-dismiss="modal">Create Meeting</button>
             </div>
         </div>
         <div class='col-xs-8 col-xs-offset-2'>
@@ -50,10 +50,6 @@
                                     <div class="input-group form-group col-xs-10 col-xs-offset-1">
                                         {{ Form::label('summary', 'Summary:', array('class' => '')) }}
                                         {{ Form::textarea('summary', null, ['class' => 'form-control']) }}
-                                    </div>
-                                    <div class="input-group form-group col-xs-10 col-xs-offset-1">
-                                        {{ Form::label('location', 'Location:', array('class' => '')) }}
-                                        {{ Form::textarea('location', null, ['class' => 'form-control']) }}
                                     </div>
                                     <div class='form-group'>
                                         <div class='text-center'>
@@ -133,16 +129,16 @@
             </div>
         <!-- --------------------- Modal end --------------------- -->
         
-        <!-- --------------------- Modal for Event --------------------- -->
+        <!-- --------------------- Modal for Meeting --------------------- -->
 
             <div class="container">
-                <div id="modal-event" class="modal fade lg" tabindex="-1" role="dialog">
+                <div id="modal-meeting" class="modal fade lg" tabindex="-1" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            {{ Form::open(array('action' => 'MeetingsController@store', 'class' => 'post')) }}                       
+                            {{ Form::open(array('action' => 'MeetingsController@create', 'class' => 'post')) }}                       
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h3>Event</h3>
+                                <h3>Meeting</h3>
                             </div>
                             <div class="modal-body">
                                 <div class='row'>
@@ -157,10 +153,6 @@
                                     <div class="input-group form-group col-xs-10 col-xs-offset-1">
                                         {{ Form::label('summary', 'Summary:', array('class' => '')) }}
                                         {{ Form::textarea('summary', null, ['class' => 'form-control']) }}
-                                    </div>
-                                    <div class="input-group form-group col-xs-10 col-xs-offset-1">
-                                        {{ Form::label('location', 'Location:', array('class' => '')) }}
-                                        {{ Form::textarea('location', null, ['class' => 'form-control']) }}
                                     </div>
                                     <div class='form-group'>
                                         <div class='text-center'>
@@ -240,13 +232,19 @@
                                 <h3>Announcement</h3>
                             </div>
                             <div class="modal-body">
-                                <div class="input-group form-group">
-                                    {{ Form::label('email', 'Email:', array('class' => 'input-group-addon')) }}
-                                    {{ Form::text('email', Input::old('email') , array('class' => 'form-control')) }}
-                                </div>                        
-                                <div class="input-group form-group">
-                                    {{ Form::label('password', 'Password:', array('class' => 'input-group-addon')) }}
-                                    {{ Form::password('password', array('class' => 'form-control')) }}
+                                <div class='row'>
+                                    <div class="input-group form-group col-xs-10 col-xs-offset-1">
+                                        {{ Form::label('title', 'Title:', array('class' => 'input-group-addon')) }}
+                                        {{ Form::text('title', Input::old('title') , array('class' => 'form-control')) }}
+                                    </div>
+                                    <div class="input-group form-group col-xs-10 col-xs-offset-1">
+                                        {{ Form::label('type', 'Type:', array('class' => 'input-group-addon')) }}
+                                        {{ Form::text('type', Input::old('type') , array('class' => 'form-control')) }}
+                                    </div>
+                                    <div class="input-group form-group col-xs-10 col-xs-offset-1">
+                                        {{ Form::label('summary', 'Summary:', array('class' => '')) }}
+                                        {{ Form::textarea('summary', null, ['class' => 'form-control']) }}
+                                    </div>
                                 </div>
                             </div> 
                             <div class="modal-footer">
