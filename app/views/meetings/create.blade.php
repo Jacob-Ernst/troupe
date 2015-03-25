@@ -1,1 +1,9 @@
-/vagrant/sites/troupe.dev/app/views/Meetings/create.blade.php
+@extends('layouts.master')
+
+@section('header', "<title>yay</title>")
+
+@section('content')
+    
+    <h1>yayayayay</h1>
+    
+@stop
