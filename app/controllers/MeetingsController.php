@@ -46,7 +46,7 @@ class MeetingsController extends BaseController {
         
         $meeting = new Meeting();
         
-        $response = $this->createMeeting($meeting);
+        $response = $this->create($meeting);
         
         return $response;
 	}
