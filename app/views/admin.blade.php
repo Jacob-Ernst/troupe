@@ -109,7 +109,7 @@
                                         <h3 id='performace-script-name'></h3>
                                     </div>
                                     <div class='form-group'>
-                                        <div class='col-xs-4 col-xs-offset-4'>
+                                        <div class='col-xs-6 col-xs-offset-3'>
                                                 <span class="btn btn-primary btn-file file-input btn-block">
                                                     Browse <input type="file" id="script" name='script'/>
                                                 </span>
@@ -151,8 +151,8 @@
                                         {{ Form::text('type', Input::old('type') , array('class' => 'form-control')) }}
                                     </div>
                                     <div class="input-group form-group col-xs-10 col-xs-offset-1">
-                                        {{ Form::label('summary', 'Summary:', array('class' => '')) }}
-                                        {{ Form::textarea('summary', null, ['class' => 'form-control']) }}
+                                        {{ Form::label('brief_summary', 'Summary:', array('class' => '')) }}
+                                        {{ Form::textarea('brief_summary', null, ['class' => 'form-control']) }}
                                     </div>
                                     <div class='form-group'>
                                         <div class='text-center'>

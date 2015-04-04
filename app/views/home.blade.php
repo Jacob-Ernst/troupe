@@ -20,43 +20,30 @@
                 </div><!--/.col-xs-12.col-lg-4-->
             @empty
             
-                <div class="col-xs-6 col-lg-4 container">
-                    <img class="img-square img-responsive" src="http://lorempixel.com/295/295/people/1" alt="Generic placeholder image">
+                <div class="col-xs-12 col-lg-6 container">
+                    <img class="img-square img-responsive" src="http://lorempixel.com/600/295/people/1" alt="Generic placeholder image">
                     <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p class="paragraph">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
                     <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
                 </div><!--/.col-xs-12.col-lg-4-->
-                <div class="col-xs-6 col-lg-4 container">
-                    <img class="img-square img-responsive" src="http://lorempixel.com/295/295/people/2" alt="Generic placeholder image">
+                <div class="col-xs-12 col-lg-6 container">
+                    <img class="img-square img-responsive" src="http://lorempixel.com/600/295/people/2" alt="Generic placeholder image">
                     <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p class="paragraph">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
                     <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
                 </div><!--/.col-xs-12.col-lg-4-->
-                <div class="col-xs-6 col-lg-4 container">
-                    <img class="img-square img-responsive" src="http://lorempixel.com/295/295/people/3" alt="Generic placeholder image">
+                <div class="col-xs-12 col-lg-6 container">
+                    <img class="img-square img-responsive" src="http://lorempixel.com/600/295/people/3" alt="Generic placeholder image">
                     <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p class="paragraph">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
                     <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
                 </div><!--/.col-xs-12.col-lg-4-->
-                <div class="col-xs-6 col-lg-4 container">
-                    <img class="img-square img-responsive" src="http://lorempixel.com/295/295/people/4" alt="Generic placeholder image">
+                <div class="col-xs-12 col-lg-6 container">
+                    <img class="img-square img-responsive" src="http://lorempixel.com/600/295/people/4" alt="Generic placeholder image">
                     <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p class="paragraph">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
                     <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
                 </div><!--/.col-xs-12.col-lg-4-->
-                <div class="col-xs-6 col-lg-4 container">
-                    <img class="img-square img-responsive" src="http://lorempixel.com/295/295/people/5" alt="Generic placeholder image">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div><!--/.col-xs-12.col-lg-4-->
-                <div class="col-xs-6 col-lg-4 container">
-                    <img class="img-square img-responsive" src="http://lorempixel.com/295/295/people/6" alt="Generic placeholder image">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div><!--/.col-xs-12.col-lg-4-->
-                
             @endforelse
         </div>
     </div>
