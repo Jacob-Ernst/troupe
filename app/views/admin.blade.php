@@ -4,6 +4,13 @@
 
 @section('content')
 
+    {{ $errors->first('title',         '<div class="alert alert-danger alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span class="help-block">:message</span></div>')}}
+    {{ $errors->first('brief_summary', '<div class="alert alert-danger alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span class="help-block">:message</span></div>')}}
+    {{ $errors->first('d_year',        '<div class="alert alert-danger alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span class="help-block">:message</span></div>')}}
+    {{ $errors->first('d_month',       '<div class="alert alert-danger alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span class="help-block">:message</span></div>')}}
+    {{ $errors->first('d_date',        '<div class="alert alert-danger alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span class="help-block">:message</span></div>')}}
+    {{ $errors->first('type',          '<div class="alert alert-danger alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span class="help-block">:message</span></div>')}}
+
     <div class="jumbotron row">
         <div class='text-center'>
             <h1>admin</h1>
@@ -113,7 +120,6 @@
                                                 <span class="btn btn-primary btn-file file-input btn-block">
                                                     Browse <input type="file" id="script" name='script'/>
                                                 </span>
-                                            {{-- <input type='file' id="script" name='script' class='file-input'/> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -262,6 +268,7 @@
 @section('bottom-scripts')
     <script type="text/javascript">
     
+    
         $(document).on('change', '.btn-file :file', function() {
             var input = $(this),
             numFiles = input.get(0).files ? input.get(0).files.length : 1,
@@ -288,7 +295,6 @@
                 height: el_height + ad_height + 30,
             });
         });
-    
     
     </script>
 @stop

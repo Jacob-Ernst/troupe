@@ -165,7 +165,20 @@ class UsersController extends BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+        if(Auth::user()->id == $id){
+    		$user = User::with('media')->find($id);
+            
+            if (!$user) {
+                Log::info('User encountered 404 error', Input::all());
+                App::abort(404);
+            }
+            
+            return View::make('users.edit', compact('user'));
+        }
+        else{
+            Session::flash('errorMessage', "Can't edit someone else's profile");
+            return Redirect::back();
+        }
 	}
 
 	/**
@@ -234,6 +247,7 @@ class UsersController extends BaseController {
             $img = Image::make($file->getRealPath());
             $img->crop(intval(Input::get('width')), intval(Input::get('height')), intval(Input::get('x')), intval(Input::get('y')));
             $img->resize(300, 300);
+            // dd($dest_path);
             $img->save($dest_path);
             
             $user->avi = "/img/avi/$id/" . $orig_name;

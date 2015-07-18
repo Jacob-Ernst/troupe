@@ -6,14 +6,23 @@ class Meeting extends BaseModel {
 	use SoftDeletingTrait;
     protected $fillable = ['production_type_id'];
     
-    public static $rules = array(
-        'title'     => 'required|max:255', 
-        'type'      => 'required|max:255',
-        'summary'   => 'required',
-        'location'  => 'required',
-        'd_year'    => 'required|numeric',
-        'd_month'   => 'required|numeric',
-        'd_day'     => 'required|numeric'
+    public static $first_rules = array(
+        'title'         => 'required|max:255', 
+        'type'          => 'required|max:255',
+        'brief_summary' => 'required|max:255',
+        'd_year'        => 'required|numeric',
+        'd_month'       => 'required|numeric',
+        'd_day'         => 'required|numeric'
+    );
+    
+    public static $final_rules = array(
+        'title'         => 'required|max:255', 
+        'type'          => 'required|max:255',
+        'brief_summary' => 'required|max:255',
+        'd_year'        => 'required|numeric',
+        'd_month'       => 'required|numeric',
+        'd_day'         => 'required|numeric',
+        'published'     => 'required|numeric|in:0,1'
     );
     
     public function images()

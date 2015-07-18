@@ -3,14 +3,14 @@
 @section('header', "<title>Troupe</title>")
 
 @section('content')
-{{ $errors->first('email', '<span class="help-block">:message</span>')}}
-{{ $errors->first('first_password', '<span class="help-block">:message</span>')}}
-{{ $errors->first('last_password', '<span class="help-block">:message</span>')}}
-{{ $errors->first('gender', '<span class="help-block">:message</span>')}}
-{{ $errors->first('b_year', '<span class="help-block">:message</span>')}}
-{{ $errors->first('b_month', '<span class="help-block">:message</span>')}}
-{{ $errors->first('b_date', '<span class="help-block">:message</span>')}}
-{{ $errors->first('type', '<span class="help-block">:message</span>')}}
+{{ $errors->first('email',          '<div class="alert alert-danger" role="alert"><span class="help-block">:message</span></div>')}}
+{{ $errors->first('first_password', '<div class="alert alert-danger" role="alert"><span class="help-block">:message</span></div>')}}
+{{ $errors->first('last_password',  '<div class="alert alert-danger" role="alert"><span class="help-block">:message</span></div>')}}
+{{ $errors->first('gender',         '<div class="alert alert-danger" role="alert"><span class="help-block">:message</span></div>')}}
+{{ $errors->first('b_year',         '<div class="alert alert-danger" role="alert"><span class="help-block">:message</span></div>')}}
+{{ $errors->first('b_month',        '<div class="alert alert-danger" role="alert"><span class="help-block">:message</span></div>')}}
+{{ $errors->first('b_date',         '<div class="alert alert-danger" role="alert"><span class="help-block">:message</span></div>')}}
+{{ $errors->first('type',           '<div class="alert alert-danger" role="alert"><span class="help-block">:message</span></div>')}}
 
 
     <div class="jumbotron magenta row">

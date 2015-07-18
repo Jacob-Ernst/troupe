@@ -24,8 +24,23 @@ class MeetingsController extends BaseController {
 	 */
 	public function create()
 	{
-        Input::flash();
-		return View::make('meetings.create');
+        if (Auth::user()->role == 'organizer' || Auth::user()->role == 'admin') 
+        {
+            $validator = Validator::make($data = Input::all(), Meeting::$first_rules);
+
+            if ($validator->fails())
+            {
+                return Redirect::back()->withErrors($validator)->withInput();
+            }
+            
+            Input::flash();
+            return View::make('meetings.create');
+        }
+        else 
+        {
+            return Redirect::action('HomeController@showHome');
+        }
+        
 	}
 
 	/**
@@ -36,7 +51,7 @@ class MeetingsController extends BaseController {
 	 */
 	public function store()
 	{
-		$validator = Validator::make($data = Input::all(), Meeting::$rules);
+		$validator = Validator::make($data = Input::all(), Meeting::$final_rules);
 
         if ($validator->fails())
         {
@@ -46,7 +61,7 @@ class MeetingsController extends BaseController {
         
         $meeting = new Meeting();
         
-        $response = $this->create($meeting);
+        $response = $this->saveMeeting($meeting);
         
         return $response;
 	}
@@ -127,7 +142,19 @@ class MeetingsController extends BaseController {
 	{
 		$meeting->title = Input::get('title');
         $meeting->summary = Input::get('summary');
+        $meeting->brief_summary = Input::get('brief_summary');
         $meeting->location = Input::get('location');
+        
+        $user = Auth::user();
+        
+        $meeting->user_id = $user->id;
+        
+        if (Input::get('published')) {
+            $meeting->published = 1;
+        }
+        else{
+            $meeting->published = 0;
+        }
         
         $meeting->type = Input::get('type');
         
@@ -143,7 +170,43 @@ class MeetingsController extends BaseController {
         
         $id = $meeting->id;
         
+        if (Input::hasFile('main_photo')) {
+            $file = Input::file('main_photo');
+            $orig_name = str_random(6) . $file->getClientOriginalName();
+            $dest_path = public_path("img/meetings-main/$id/" . $orig_name);
+            $img = Image::make($file->getRealPath());
+            $img->crop(intval(Input::get('width')), intval(Input::get('height')), intval(Input::get('x')), intval(Input::get('y')));
+            $img->resize(600, 338);
+            // dd($dest_path);
+            $img->save($dest_path);
+            
+            $meeting->main_photo = "/img/meetings-main/$id/" . $orig_name;
+            
+            $meeting->save();
+        }
+        
         return Redirect::action('MeetingsController@show', array($id));
 	}
+    
+    public function uploadAvi ()
+    {
+        if (Input::hasFile('image')) {
+            $file = Input::file('image');
+            $dest_path = public_path() . "/img/meetings-main/$id/";
+            $orig_name = str_random(6) . $file->getClientOriginalName();
+            $dest_path .= $orig_name;
+            $img = Image::make($file->getRealPath());
+            $img->crop(intval(Input::get('width')), intval(Input::get('height')), intval(Input::get('x')), intval(Input::get('y')));
+            $img->resize(300, 300);
+            $img->save($dest_path);
+            
+            $user->avi = "/img/avi/$id/" . $orig_name;
+            
+            $user->save();
+
+            return Redirect::action('UsersController@show', array($id));
+        }
+        return Redirect::action('HomeController@showHome');
+    }
 
 }

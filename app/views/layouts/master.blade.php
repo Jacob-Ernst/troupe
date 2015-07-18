@@ -69,6 +69,25 @@
         
         <div class= 'container'>
             <div class='row'>
+                <div class='col-md-8 col-md-offset-2'>
+                    @if (Session::has('successMessage'))
+                        <div class="alert alert-success alert-dismissible fade in"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{{ Session::get('successMessage') }}}</div>
+                    @endif
+                    @if (Session::has('errorMessage'))
+                        <div class="alert alert-danger alert-dismissible fade in"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{{ Session::get('errorMessage') }}}</div>
+                    @endif
+                    @if (Session::has('warningMessage'))
+                        <div class="alert alert-warning alert-dismissible fade in"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{{ Session::get('warningMessage') }}}</div>
+                    @endif
+                    @if (Session::has('infoMessage'))
+                        <div class="alert alert-info alert-dismissible fade in"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{{ Session::get('infoMessage') }}}</div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        
+        <div class= 'container'>
+            <div class='row'>
                 <div class='col-xs-10 col-xs-offset-1'>
                     @yield('content')
                 </div>
@@ -118,6 +137,9 @@
                 dots: true
             });
             $('#tags').tagsInput();
+            setTimeout(function() {
+                $('.alert').alert('close');
+            }, 3000);
         </script>
         @yield('bottom-scripts')
     </body>

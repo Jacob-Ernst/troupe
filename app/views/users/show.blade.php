@@ -31,9 +31,12 @@
             @endif
         </div>
         <div class="col-xs-8 col-xs-offset-2 col-md-12 col-md-offset-0">
-             <h1 class="">{{{$user->first_name}}} {{{$user->last_name}}}</h1>
+            <h1 class="">{{{$user->first_name}}} {{{$user->last_name}}}</h1>
          
-          <a class="btn btn-success" href="mailto:{{{$user->email}}}">Email me!</a>
+            <a class="btn btn-success" href="mailto:{{{$user->email}}}">Email me!</a>
+            @if (Auth::user()->id == $user->id)
+                <a class="btn btn-warning" href="{{{ action('UsersController@edit', array($user->id)) }}}">Edit Profile</a>
+            @endif
         <br>
         </div>
     </div>
@@ -48,14 +51,14 @@
                 <li class="list-group-item text-right"><span class="pull-left"><strong class="">Gender</strong></span> {{{$user->gender}}}</li>
                 <li class="list-group-item text-right"><span class="pull-left"><strong class="">Type: </strong></span> {{{$user->type}}}</li>
             </ul>
-           {{-- <div class="panel panel-default">
+           <div class="panel panel-default">
              <div class="panel-heading">Insured / Bonded?
 
                 </div>
                 <div class="panel-body"><i style="color:green" class="fa fa-check-square"></i> Yes, I am insured and bonded.
 
                 </div>
-            </div> --}}
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Website <i class="fa fa-link fa-1x"></i>
 
@@ -162,7 +165,7 @@
 
     <div class="container">
         <div class="modal fade lg" id="cropping-modal" tabindex="-1" role="dialog">
-          <div class="modal-dialog">
+          <div id="cropping-modal-dialog" class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -202,13 +205,15 @@
                 reader.onload = function (e) {
                     $('#blah').attr('src', e.target.result);
                     $('#cropping-modal').modal();
+                    
                 }
+                
                 
                 reader.readAsDataURL(input.files[0]);
             }
         }
         
-        var $image = $(".cropping-modal-cropper > img"),
+        var $image = $(".cropping-modal-cropper > img");
             originalData = {};
 
         $("#cropping-modal").on("shown.bs.modal", function() {
@@ -222,6 +227,12 @@
                 $('#y').val(data.y);
                 $('#width').val(data.width);
                 $('#height').val(data.height);
+                var ad_height  = $('.cropper-canvas').height();
+                $backdrop  = $('.modal-backdrop');
+                var el_height  = $('#cropping-modal-dialog').innerHeight();
+                $backdrop.css({
+                    height: ad_height + (el_height / 3)
+                });
             }
           });
         }).on("hidden.bs.modal", function() {

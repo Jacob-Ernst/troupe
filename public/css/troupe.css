@@ -135,6 +135,14 @@ a{
     display: block;
 }
 
+.photo-pencil{
+    color: #337AB7 !important;
+}
+
+.photo-pencil:hover{
+    color: #155993 !important;
+}
+
 div.form-body{
     background-color: rgba(224,228,204, 0.8);
     padding: 40px 30px;

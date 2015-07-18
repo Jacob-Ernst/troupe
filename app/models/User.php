@@ -122,6 +122,16 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
         $this->media()->sync($mediumIds);
     }
     
+    public function getMediaTagsAttribute($value)
+    {
+        $media_tags = '';
+        foreach ($this->media as $medium) {
+            $media_tags += ',' . $medium->medium;
+        }
+        dd($media_tags);
+        return $media_tags;
+    }
+    
     public function getDateOfBirthAttribute($value)
     {  
         $utc = Carbon::createFromFormat('Y-m-d', $value);
