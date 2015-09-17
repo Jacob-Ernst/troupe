@@ -15,7 +15,6 @@ Route::get('/', 'HomeController@showHome');
 
 Route::get('/admin', 'HomeController@showAdmin');
 
-Route::post('/login', 'HomeController@doLogin');
 
 Route::get('/logout', 'HomeController@doLogout');
 
@@ -30,3 +29,10 @@ Route::resource('meetings', 'MeetingsController');
 Route::resource('announcements', 'AnnouncementsController');
 
 Route::post('meetings/create', 'MeetingsController@create');
+
+Route::group(array('prefix' => 'api/v1'), function()
+{
+    Route::post('/login', 'HomeController@doLogin');
+    Route::resource('users', 'UsersController',[
+   'before' => 'jwt-auth'] );
+});

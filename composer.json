@@ -6,7 +6,9 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"intervention/image": "~2.1"
+		"intervention/image": "~2.1",
+		"tymon/jwt-auth": "0.4.2",
+		"barryvdh/laravel-cors": "0.2.x"
 	},
 	"require-dev":  {
 		"way/generators": "~2.6",
@@ -19,7 +21,8 @@
 			"app/models",
 			"app/database/migrations",
 			"app/database/seeds",
-			"app/tests/TestCase.php"
+			"app/tests/TestCase.php",
+			"app/Api/Classes/"
 		]
 	},
 	"scripts": {

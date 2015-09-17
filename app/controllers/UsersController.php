@@ -1,19 +1,23 @@
 <?php
 
 use Carbon\Carbon;
+use App\Api\Classes\UserTransformer;
 
 class UsersController extends BaseController {
-	
-	
-	public function __construct()
+
+    protected $userTransformer;
+
+	public function __construct(UserTransformer $userTransformer)
     {
         parent::__construct();
-        
-        
-        $this->beforeFilter('auth', array('except' => array('store')));
+
+        $this->userTransformer = $userTransformer;
+
+
+        // $this->beforeFilter('auth', array('except' => array('store')));
     }
-	
-	
+
+
 	/**
 	 * Display a listing of the resource.
 	 * GET /users
@@ -23,42 +27,42 @@ class UsersController extends BaseController {
 	public function index()
 	{
 		$query = User::with('media');
-		
-        
+
+
         if (!empty(Input::all())) {
         	if((Input::get('type') != 'none') && !empty(Input::get('type'))){
 	        	$type = strtolower(Input::get('type'));
 	        	$query->where('type', '=', "$type");
         	}
-        	
+
         	if(!empty(Input::get('media'))){
 	            $query->WhereHas('media', function($mediaSearch){
 	                $media = [];
-	                                
+
 	                foreach (explode(',', Input::get('media')) as $value) {
 	                	$media[] = $value;
 	            	}
 	                $mediaSearch->whereIn('medium', $media);
 	            });
 	        }
-	        
+
 	        if (
-	        	(Input::get('male')      == 'm') || 
-	        	(Input::get('female')    == 'f') || 
-	        	(Input::get('other')     == 'o') || 
+	        	(Input::get('male')      == 'm') ||
+	        	(Input::get('female')    == 'f') ||
+	        	(Input::get('other')     == 'o') ||
 	        	(Input::get('not_given') == 'p')
-	           ) 
+	           )
 	        {
-	        	
+
 	        	$male      = Input::get('male')      == 'm' ? 'm' : '';
 	        	$female    = Input::get('female')    == 'f' ? 'f' : '';
 	        	$other     = Input::get('other')     == 'o' ? 'o' : '';
 	        	$not_given = Input::get('not_given') == 'p' ? 'p' : '';
-	        	
+
 	        	$gender_inputs = [$male, $female, $other, $not_given];
-	        	
+
 	        	$genders = [];
-	        	                    
+
                 foreach ($gender_inputs as $value) {
                 	if(!empty($value)){
                 		$genders[] = $value;
@@ -66,7 +70,7 @@ class UsersController extends BaseController {
             	}
 	                $query->whereIn('gender', $genders);
         	}
-        	
+
         	if(
         		(Input::get('type') == 'none' || empty(Input::get('type'))) &&
         		 Input::get('male')      != 'm' &&
@@ -75,7 +79,7 @@ class UsersController extends BaseController {
 				 Input::get('not_given') != 'p' &&
 				 empty(Input::get('media'))     &&
 				 Input::has('name')
-				 
+
         	  )
         	{
         		$meta = [];
@@ -94,11 +98,11 @@ class UsersController extends BaseController {
 	            $query->orWhereIn('last_name_meta', $meta);
         	}
         }
-            
+
         $users = $query->orderBy('last_name', 'ASC')->paginate(6);
 
         return View::make('users.index')->with('users', $users);
-	
+
 	}
 
 	/**
@@ -126,14 +130,14 @@ class UsersController extends BaseController {
         {
             return Redirect::back()->withErrors($validator)->withInput();
         }
-        
-        
+
+
         $user = new User();
-        
+
         $response = $this->saveUser($user);
-        
+
         Auth::login($user);
-        
+
         return $response;
 	}
 
@@ -146,14 +150,35 @@ class UsersController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$user = User::with('media')->find($id);
-        
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+		// $user = User::find($id);
+
+        // if (!$user) {
+        //     Log::info('User encountered 404 error', Input::all());
+        //     App::abort(404);
+        // }
+
+        // return View::make('users.show', compact('user'));
+
         if (!$user) {
             Log::info('User encountered 404 error', Input::all());
-            App::abort(404);
+            return Response::json([
+                'error' => [
+
+                    'message' => 'User does not exist'
+
+                ]
+
+            ], 404);
         }
-        
-        return View::make('users.show', compact('user'));
+
+        return Response::json([
+
+            'user' => $this->userTransformer->transform($user)
+
+        ], 200);
+
 	}
 
 	/**
@@ -167,12 +192,12 @@ class UsersController extends BaseController {
 	{
         if(Auth::user()->id == $id){
     		$user = User::with('media')->find($id);
-            
+
             if (!$user) {
                 Log::info('User encountered 404 error', Input::all());
                 App::abort(404);
             }
-            
+
             return View::make('users.edit', compact('user'));
         }
         else{
@@ -204,10 +229,10 @@ class UsersController extends BaseController {
 	{
 		//
 	}
-	
+
 	public function saveUser(&$user)
     {
-        
+
         $user->email = Input::get('email');
         $user->password = Input::get('first_password');
         $user->first_name = Input::get('first_name');
@@ -215,26 +240,26 @@ class UsersController extends BaseController {
         $user->gender = Input::get('gender');
         $user->type = Input::get('type');
         $user->role = 'user';
-        
-        //concatonate the three dropdowns 
-        
+
+        //concatonate the three dropdowns
+
         $user->date_of_birth = Carbon::create(Input::get('b_year'), Input::get('b_month'), Input::get('b_date'));
-        
+
         $user->date_of_birth->format('Y-m-d');
-        
-        
+
+
         $user->save();
-        
+
         if (Input::has('media')) {
             $user->media = Input::get('media');
         }
-            
+
         $id = $user->id;
-        
+
         return Redirect::action('UsersController@show', array($id));
-        
+
     }
-    
+
     public function uploadAvi ()
     {
         $user = Auth::user();
@@ -249,14 +274,13 @@ class UsersController extends BaseController {
             $img->resize(300, 300);
             // dd($dest_path);
             $img->save($dest_path);
-            
+
             $user->avi = "/img/avi/$id/" . $orig_name;
-            
+
             $user->save();
 
             return Redirect::action('UsersController@show', array($id));
         }
         return Redirect::action('HomeController@showHome');
     }
-
 }
